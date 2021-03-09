@@ -449,8 +449,8 @@ public class AudioService extends MediaBrowserServiceCompat {
         super.onCreate();
         instance = this;
         notificationChannelId = getApplication().getPackageName() + ".channel";
-
-        mediaSession = new MediaSessionCompat(this, "media-session");
+        ComponentName mComponent = new ComponentName(getApplication().getPackageName(), "Pixar Stories");
+        mediaSession = new MediaSessionCompat(this, "media-session",mComponent,null);
         mediaSession.setMediaButtonReceiver(null); // TODO: Make this configurable
         mediaSession.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS | MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
         PlaybackStateCompat.Builder stateBuilder = new PlaybackStateCompat.Builder()
