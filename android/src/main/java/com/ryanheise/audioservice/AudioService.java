@@ -449,10 +449,13 @@ public class AudioService extends MediaBrowserServiceCompat {
         super.onCreate();
         instance = this;
         notificationChannelId = getApplication().getPackageName() + ".channel";
-        ComponentName mComponent = new ComponentName(getApplication().getPackageName(), AudioService.class.getName());
-        mediaSession = new MediaSessionCompat(this, "media-session",mComponent,null);
+        ComponentName mediaButtonReceiver = new ComponentName(getApplicationContext(), MediaButtonReceiver.class);
+        mediaSession = new MediaSessionCompat(this, "media-session",mediaButtonReceiver,null);
         System.out.println("ComponentName created with name: " + mComponent.getName());
-        mediaSession.setMediaButtonReceiver(null); // TODO: Make this configurable
+        Intent mediaButtonIntent = new Intent(Intent.ACTION_MEDIA_BUTTON);
+        mediaButtonIntent.setClass(this, MediaButtonReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, mediaButtonIntent, 0);
+        mediaSession.setMediaButtonReceiver(mediaButtonIntent); // TODO: Make this configurable
         mediaSession.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS | MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
         PlaybackStateCompat.Builder stateBuilder = new PlaybackStateCompat.Builder()
                 .setActions(PlaybackStateCompat.ACTION_PLAY);
