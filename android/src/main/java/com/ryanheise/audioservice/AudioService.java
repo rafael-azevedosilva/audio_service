@@ -451,6 +451,7 @@ public class AudioService extends MediaBrowserServiceCompat {
         notificationChannelId = getApplication().getPackageName() + ".channel";
         ComponentName mComponent = new ComponentName(getApplication().getPackageName(), AudioService.class.getName());
         mediaSession = new MediaSessionCompat(this, "media-session",mComponent,null);
+        System.out.println("ComponentName created with name: " + mComponent.getName());
         mediaSession.setMediaButtonReceiver(null); // TODO: Make this configurable
         mediaSession.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS | MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
         PlaybackStateCompat.Builder stateBuilder = new PlaybackStateCompat.Builder()
